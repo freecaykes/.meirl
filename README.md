@@ -1,3 +1,3 @@
-# bin-collection
+# bin
 
-Collection of useful bash scripts.  Each script objective will be described in the wiki.
+why always me
