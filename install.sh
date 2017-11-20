@@ -14,13 +14,13 @@ source /home/$user/.bashrc
 # DEV
 cp $SCRIPT_DIR/dev $bin
 
-if [[$(dpkg -s python | grep Status) != *install ok installed*]];then
+if [[$(dpkg -s python | grep Status) != *install ok installed* ]]; then
     sudo apt-get install python
 fi
 
 wget https://bootstrap.pypa.io/get-pip.py
 sudo python get-pip.py
-pip install -r $bin/dev/packages.txt
+pip install -r $bin/dev/packages.txt --no-index
 
 rm get-pip.py
 
@@ -43,8 +43,23 @@ do
 done
 
 # vimrc
+cp $SCRIPT_DIR/vim/.vimrc /home/$user/
+# Vundle cause I'm a pleb
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+vim -c PluginInstall ~/.vimrc&
+vim_pid=$!
+
+kill -9 $vim_pid
 
 # ipsets
+if [[$(dpkg -s ippset | grep Status) != *install ok installed* ]]; then
+  sudo apt-get install ipset
+fi
+
+sudo bash $SCRIPT_DIR/ipsets/ipset_dshield.sh
+sudo bash $SCRIPT_DIR/ipsets/ipset_em.sh
+
+cp $SCRIPT_DIR/ipsets $bin
 
 # network
 cp $SCRIPT_DIR/network $bin
