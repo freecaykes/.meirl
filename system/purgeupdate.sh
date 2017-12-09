@@ -1,6 +1,5 @@
 # !/bin/bash
 
-# freecaykes
 apt autoremove  #  clean up
 
 uname_r=$(uname -r)
@@ -14,10 +13,10 @@ dpkg -l | grep linux-image | while read -r line ; do
   fi
 done
 
-
 apt-get update
 apt -f install
 apt-get dist-upgrade
 apt-get upgrade
+apt autoremove
 
 uname -r
