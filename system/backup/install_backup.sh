@@ -9,11 +9,18 @@ if [! -z "$backup_directory"]
     backup_directory=$backup_dir
 fi
 
-rsync -rPz "$backup_directory" /home/$user
-
 sudo apt-key add ~/Repo.keys
 sudo cp -R ~/sources.list* /etc/apt/
-sudo apt-get update
-sudo apt-get install dselect
+sudo dselect update
+
+# update dpkg list
+temp_dir=/home/$user/temp_avail
+mkdir $temp_dir
+
+apt-cache dumpavail > $temp_dir
+sudo dpkg --merge-avail $temp_dir
+rm $temp_dir 
+
+
 sudo dpkg --set-selections < ~/Package.list
-sudo dselect
+sudo apt-get dselect-upgrade -y

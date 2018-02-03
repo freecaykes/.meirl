@@ -1,20 +1,20 @@
 #!/bin/bash
 
-dpkg --get-selections > ~/Package.list
-sudo cp -R /etc/apt/sources.list* ~/
-sudo apt-key exportall > ~/Repo.keys
+user="$(whoami | awk '{print $1}')"
+backup_directory=/home/$user/backup
 
-user="$(who am i | awk '{print $1}')"
-backup_directory=/home/backup
+read -p "Backup directory location (default $backup_directory [ENTER]):" $backup_dir
 
-echo -n "Backup directory location (default $backup_directory [ENTER]): "
-read -a backup_dir
-
-if [ ! -z "$backup_dir"]
-  then
-    mkdir $backup_directory
+if [ ! -z "$backup_dir"]; then
     backup_directory=$backup_dir
 fi
 
+if [ ! -d "$DIRECTORY" ]; then
+    mkdir $backup_directory
+fi
+
+dpkg --get-selections > $backup_directory/Package.list
+sudo cp -R /etc/apt/sources.list* $backup_directory/
+sudo apt-key exportall > $backup_directory/Repo.keys
+
 echo $backup_directory
-rsync -rPz /home/$user "$backup_directory"
