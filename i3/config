@@ -165,21 +165,16 @@ bar {
 	        focused_workspace #242424 #D5D5D5 #242424
 	        active_workspace   #333333 #5f676a #ffffff
 	        inactive_workspace #242424 #282828 #CCCACA
-                urgent_workspace   #2A1A1A #858774 #1b1b1b
-                binding_mode       #2f343a #900000 #ffffff
+            urgent_workspace   #2A1A1A #858774 #1b1b1b
+            binding_mode       #2f343a #900000 #ffffff
         }
-
-	# Hide i3bar. Show up i3bar when pressing $mod
-	#mode hide
-	#hidden_state hide
-	#modifier $Mod
 }
 
 # Borders
+new_window 1pixel
 new_window none
-new_window normal 0
+new_float 1pixel
 new_float none
-new_float normal 0
 hide_edge_borders both
 
 # bind fullscreen window 
@@ -189,5 +184,7 @@ bindsym $mod+y focus parent; fullscreen; focus child
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
-bindsym $mod+o exec pacmd "set-default-sink alsa_output.pci-0000_01_00.1.hdmi-stereo"
 bindsym $mod+p exec pacmd "set-default-sink alsa_output.usb-Plantronics_Plantronics_HD1-00.analog-stereo"
+
+# startup
+exec pulseaudio
