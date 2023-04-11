@@ -28,7 +28,7 @@ shopt -s checkwinsize
 #shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
@@ -79,22 +79,18 @@ if [ -x /usr/bin/dircolors ]; then
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+    #alias grep='grep --color=auto'
+    #alias fgrep='fgrep --color=auto'
+    #alias egrep='egrep --color=auto'
 fi
 
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+#alias ll='ls -l'
+#alias la='ls -A'
+#alias l='ls -CF'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -103,10 +99,6 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
-fi
-
-if [ -f ~/.bash_profile ]; then
-    . ~/.bash_profile
 fi
 
 # enable programmable completion features (you don't need to enable
@@ -119,3 +111,28 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+# wifi
+alias wifi-list="nmcli device wifi list"
+alias wifi-connect="nmcli device wifi connect"
+
+#screen
+alias xrandrhdmi="$HOME/workspace/scripts/screen/xrandrHDMI.sh"
+alias xrandrreset="xrandr -s 0"
+
+#git
+alias current_branch="git rev-parse --abbrev-ref HEAD"
+alias git-clean="git clean -ffxd"
+alias syncfork="$HOME/workspace/scripts/dev/git/syncfork.sh"
+#go
+alias go-clean="go clean --modcache"
+
+
+#docker
+alias docker-local="docker-machine env -u"
+alias docker-push="$HOME/workspace/scripts/dev/docker/docker-push.sh"
+alias docker-set-self="sudo usermod -a -G docker $USER"
+alias docker-system-prune="docker system prune -a"
+
+#kubernetes
+alias k-port-forward="f(){kubectl -n "$1" port-forward svc/"$2" 9443; unset -f f;} f"
