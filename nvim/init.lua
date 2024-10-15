@@ -17,21 +17,21 @@ local packer_bootstrap = ensure_packer()
 
 -- Setup plugins using packer
 require('packer').startup(function(use)
-  use 'wbthomason/packer.nvim'  -- Packer itself
-  -- colorscheme
-  use {
-    "loctvl842/monokai-pro.nvim",
-    config = function()
-    require("monokai-pro").setup()
-    end
-  }
-  use {
-    'preservim/nerdtree',
-     config = function()
-       -- Optional: configure NERDTree key mappings
-       vim.api.nvim_set_keymap('n', '<C-n>', ':NERDTreeToggle<CR>', { noremap = true, silent = true })
-     end
-  }
+    use 'wbthomason/packer.nvim'  -- Packer itself
+    -- colorscheme
+    use {
+        "loctvl842/monokai-pro.nvim",
+        config = function()
+        require("monokai-pro").setup()
+        end
+    }
+    use {
+        'preservim/nerdtree',
+        config = function()
+        -- Optional: configure NERDTree key mappings
+        vim.api.nvim_set_keymap('n', '<C-n>', ':NERDTreeToggle<CR>', { noremap = true, silent = true })
+        end
+    }
 
     -- Treesitter for syntax highlighting
     use {
@@ -50,18 +50,9 @@ require('packer').startup(function(use)
     use {
         'neovim/nvim-lspconfig',
         config = function()
-            require'lspconfig'.zigls.setup {
-                cmd = { "zig-langserver" },
-                filetypes = { "zig" },
-                root_dir = require'lspconfig'.util.root_pattern("build.zig", "zig.mod"),
-                settings = {
-                    zig = {
-                        diagnostics = {
-                            enable = true,
-                        },
-                    },
-                },
-            }
+          local lspconfig = require('lspconfig')
+          -- zls setup
+          lspconfig.zls.setup{}
         end
     }
    -- Autocompletion framework
@@ -108,19 +99,55 @@ require('packer').startup(function(use)
     use {
         'nanozuki/tabby.nvim',
         config = function()
-            require("tabby").setup({
-                tabline = function()
-                    local tab_num = vim.fn.tabpagenr('$')
-                    local tabs = {}
-                    for i = 1, tab_num do
-                        local bufnr = vim.fn.tabpagebuflist(i)[1]
-                        local bufnr_name = vim.fn.bufname(bufnr)
-                        local modified = vim.fn.getbufvar(bufnr, '&modified') == 1 and '●' or ''
-                        table.insert(tabs, string.format(" %s %s ", bufnr_name, modified))
-                    end
-                    return table.concat(tabs, "")
+            local theme = {
+                fill = 'TabLineFill',
+                -- Also you can do this: fill = { fg='#f2e9de', bg='#907aa9', style='italic' }
+                head = 'TabLine',
+                current_tab = 'TabLineSel',
+                tab = 'TabLine',
+                win = 'TabLine',
+                tail = 'TabLine',
+              }
+              require('tabby').setup({
+                line = function(line)
+                  return {
+                    {
+                      { '  ', hl = theme.head },
+                      line.sep('', theme.head, theme.fill),
+                    },
+                    line.tabs().foreach(function(tab)
+                      local hl = tab.is_current() and theme.current_tab or theme.tab
+                      return {
+                        line.sep('', hl, theme.fill),
+                        tab.is_current() and '' or '󰆣',
+                        tab.number(),
+                        tab.name(),
+                        tab.close_btn(''),
+                        line.sep('', hl, theme.fill),
+                        hl = hl,
+                        margin = ' ',
+                      }
+                    end),
+                    line.spacer(),
+                    line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
+                      return {
+                        line.sep('', theme.win, theme.fill),
+                        win.is_current() and '' or '',
+                        win.buf_name(),
+                        line.sep('', theme.win, theme.fill),
+                        hl = theme.win,
+                        margin = ' ',
+                      }
+                    end),
+                    {
+                      line.sep('', theme.tail, theme.fill),
+                      { '  ', hl = theme.tail },
+                    },
+                    hl = theme.fill,
+                  }
                 end,
-            })
+                -- option = {}, -- setup modules' option,
+              })
         end
     }
     -- formatting support
@@ -131,14 +158,26 @@ require('packer').startup(function(use)
             vim.api.nvim_set_keymap('n', '<leader>f', ':Neoformat<CR>', { noremap = true, silent = true })
         end
     }
-   -- snippet engine
-   use 'L3MON4D3/LuaSnip'
+    -- snippet engine
+    use 'L3MON4D3/LuaSnip'
 
+    -- auto-save config
+    use({
+      "Pocco81/auto-save.nvim",
+      config = function()
+         require("auto-save").setup {
+          -- your config goes here
+          -- or just leave it empty :)
+         }
+      end,
+    })
+    
   -- Automatically set up your configuration after cloning packer.nvim
   if packer_bootstrap then
     require('packer').sync()
   end
 end)
+
 
 -- editor config
 vim.o.number = true               -- Show line numbers
