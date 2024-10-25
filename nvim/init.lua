@@ -18,13 +18,6 @@ local packer_bootstrap = ensure_packer()
 -- Setup plugins using packer
 require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'  -- Packer itself
-    -- colorscheme
-    use {
-        "loctvl842/monokai-pro.nvim",
-        config = function()
-        require("monokai-pro").setup()
-        end
-    }
     use {
         'preservim/nerdtree',
         config = function()
@@ -32,7 +25,13 @@ require('packer').startup(function(use)
         vim.api.nvim_set_keymap('n', '<C-n>', ':NERDTreeToggle<CR>', { noremap = true, silent = true })
         end
     }
-
+    -- colorscheme
+    use {
+        "loctvl842/monokai-pro.nvim",
+        config = function()
+        require("monokai-pro").setup()
+        end
+    }
     -- Treesitter for syntax highlighting
     use {
         'nvim-treesitter/nvim-treesitter',
@@ -47,14 +46,8 @@ require('packer').startup(function(use)
         end
     }
     -- LSP configuration
-    use {
-        'neovim/nvim-lspconfig',
-        config = function()
-          local lspconfig = require('lspconfig')
-          -- zls setup
-          lspconfig.zls.setup{}
-        end
-    }
+    use 'neovim/nvim-lspconfig'
+
    -- Autocompletion framework
     use {
         'hrsh7th/nvim-cmp',
@@ -178,6 +171,41 @@ require('packer').startup(function(use)
   end
 end)
 
+-- lsp configs
+local lspconfig = require('lspconfig')
+-- zig zls setup
+lspconfig.zls.setup{}
+lspconfig.tsserver.setup{}
+lspconfig.pylsp.setup{
+  on_attach = function(client, bufnr)
+    local opts = { noremap=true, silent=true }
+    
+    -- Key mappings for LSP
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+
+    -- Cmd + Click for definition
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<LeftMouse>', '<cmd>lua require("utils").cmd_click_definition()<CR>', { noremap = true, silent = true })
+  end,
+}
+
+-- Create utility function for Cmd + Click
+function _G.cmd_click_definition()
+  if vim.fn.has('mac') == 1 then
+    local mouse = vim.fn.getmousepos()
+    local line = mouse.line
+    local col = mouse.col
+    vim.fn.cursor(line, col)
+    vim.lsp.buf.definition()
+  end
+end
+
+-- colorscheme config
+require("monokai-pro").setup({
+  filter = "classic"
+})
+
+vim.cmd([[colorscheme monokai-pro]])
 
 -- editor config
 vim.o.number = true               -- Show line numbers
@@ -188,11 +216,3 @@ vim.o.tabstop = 4                 -- Number of spaces that a <Tab> in the file c
 
 
 -- nerdtree config
-
-
--- colorscheme config
-require("monokai-pro").setup({
-  filter = "classic"
-})
-
-vim.cmd([[colorscheme monokai-pro]])
