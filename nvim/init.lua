@@ -45,48 +45,25 @@ require('packer').startup(function(use)
             }
         end
     }
+   
     -- LSP configuration
-    use 'neovim/nvim-lspconfig'
+   use 'neovim/nvim-lspconfig'
 
+   -- LSP configuration
+   use 'hrsh7th/cmp-nvim-lsp'
+   use 'hrsh7th/cmp-vsnip'
+   use 'hrsh7th/vim-vsnip'  
+   use 'onsails/lspkind.nvim'
    -- Autocompletion framework
     use {
         'hrsh7th/nvim-cmp',
         requires = {
-            'hrsh7th/cmp-nvim-lsp',       -- LSP source for nvim-cmp
+	    'hrsh7th/cmp-nvim-lsp',       -- LSP source for nvim-cmp
             'hrsh7th/cmp-buffer',          -- Buffer source
             'hrsh7th/cmp-path',            -- Path source
             'hrsh7th/cmp-cmdline',         -- Command line completion
             'hrsh7th/cmp-nvim-lsp-signature-help', -- Signature help
         },
-        config = function()
-            local cmp = require'cmp'
-
-            cmp.setup({
-                snippet = {
-                    expand = function(args)
-                        require('luasnip').lsp_expand(args.body)  -- For snippet support
-                    end,
-                },
-                mapping = {
-                    ['<C-n>'] = cmp.mapping.select_next_item(),
-                    ['<C-p>'] = cmp.mapping.select_prev_item(),
-                    ['<C-Space>'] = cmp.mapping.complete(),
-                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-                },
-                sources = {
-                    { name = 'nvim_lsp' },
-                    { name = 'buffer' },
-                    { name = 'path' },
-                },
-            })
-
-            -- Command line completion
-            cmp.setup.cmdline(':', {
-                sources = {
-                    { name = 'cmdline' }
-                }
-            })
-        end
     }
     -- Tab management with tabby.nvim
     use {
@@ -151,8 +128,19 @@ require('packer').startup(function(use)
             vim.api.nvim_set_keymap('n', '<leader>f', ':Neoformat<CR>', { noremap = true, silent = true })
         end
     }
+    
+    -- code symbols
+    use 'simrat39/symbols-outline.nvim'
+    
     -- snippet engine
     use 'L3MON4D3/LuaSnip'
+    
+    -- finder telescope
+    use {
+   	'nvim-telescope/telescope.nvim', tag = '0.1.8',
+  	requires = { {'nvim-lua/plenary.nvim'} }
+    }
+    use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
     -- auto-save config
     use({
@@ -171,11 +159,26 @@ require('packer').startup(function(use)
   end
 end)
 
+-- create keymaps
+function nnoremap(rhs, lhs, desc)
+  vim.keymap.set("n", rhs, lhs)
+end
+
 -- lsp configs
+
+-- disable language provider support (lua and vimscript plugins only)
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_node_provider = 0
+vim.g.loaded_python_provider = 0
+vim.g.loaded_python3_provider = 0
+
 local lspconfig = require('lspconfig')
--- zig zls setup
-lspconfig.zls.setup{}
-lspconfig.tsserver.setup{}
+
+lspconfig.zls.setup{
+    cmd = { "zls" },
+}
+lspconfig.ts_ls.setup{}
 lspconfig.pylsp.setup{
   on_attach = function(client, bufnr)
     local opts = { noremap=true, silent=true }
@@ -199,6 +202,88 @@ function _G.cmd_click_definition()
     vim.lsp.buf.definition()
   end
 end
+
+-- completion config
+local cmp = require('cmp')
+cmp.setup {
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'nvim_lsp_signature_help' },
+    { name = 'vsnip' },
+  },
+  snippet = {
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body) -- because we are using the vsnip cmp plugin
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+  }),
+}
+
+
+-- finder config
+
+require('telescope').setup({
+  defaults = {
+    path_display = {
+      shorten = {
+        len = 3, exclude = {1, -1}
+      },
+      truncate = true
+    },
+    dynamic_preview_title = true,
+  },
+  extensions = {
+    fzf = {
+      fuzzy = true,                    -- false will only do exact matching
+      override_generic_sorter = true,  -- override the generic sorter
+      override_file_sorter = true,     -- override the file sorter
+      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                       -- the default case_mode is "smart_case"
+    }
+  }
+})
+require('telescope').load_extension('fzf')
+-- telescope key mappings
+nnoremap("<leader>ff", "<cmd>Telescope find_files<cr>", "Find file")
+nnoremap("<leader>fg", "<cmd>Telescope live_grep<cr>", "Grep")
+nnoremap("<leader>fb", "<cmd>Telescope buffers<cr>", "Find buffer")
+nnoremap("<leader>fm", "<cmd>Telescope marks<cr>", "Find mark")
+nnoremap("<leader>fr", "<cmd>Telescope lsp_references<cr>", "Find references (LSP)")
+nnoremap("<leader>fs", "<cmd>Telescope lsp_document_symbols<cr>", "Find symbols (LSP)")
+nnoremap("<leader>fc", "<cmd>Telescope lsp_incoming_calls<cr>", "Find incoming calls (LSP)")
+nnoremap("<leader>fo", "<cmd>Telescope lsp_outgoing_calls<cr>", "Find outgoing calls (LSP)")
+nnoremap("<leader>fi", "<cmd>Telescope lsp_implementations<cr>", "Find implementations (LSP)")
+nnoremap("<leader>fx", "<cmd>Telescope diagnostics bufnr=0<cr>", "Find errors (LSP)")
+
+-- 
+require("symbols-outline").setup {
+  auto_close = true,
+}
+-- window management
+nnoremap("<C-S-Right>", "<cmd>:vertical resize -1<cr>", "Minimize window")
+nnoremap("<C-S-Left>", "<cmd>:vertical resize +1<cr>", "Maximize window")
 
 -- colorscheme config
 require("monokai-pro").setup({

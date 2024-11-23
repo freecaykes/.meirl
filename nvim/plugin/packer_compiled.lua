@@ -49,8 +49,8 @@ local function save_profiles(threshold)
 end
 
 time([[Luarocks path setup]], true)
-local package_path_str = "/home/edbert/.cache/nvim/packer_hererocks/2.1.1727870382/share/lua/5.1/?.lua;/home/edbert/.cache/nvim/packer_hererocks/2.1.1727870382/share/lua/5.1/?/init.lua;/home/edbert/.cache/nvim/packer_hererocks/2.1.1727870382/lib/luarocks/rocks-5.1/?.lua;/home/edbert/.cache/nvim/packer_hererocks/2.1.1727870382/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/home/edbert/.cache/nvim/packer_hererocks/2.1.1727870382/lib/lua/5.1/?.so"
+local package_path_str = "/home/edbert/.cache/nvim/packer_hererocks/2.1.1713484068/share/lua/5.1/?.lua;/home/edbert/.cache/nvim/packer_hererocks/2.1.1713484068/share/lua/5.1/?/init.lua;/home/edbert/.cache/nvim/packer_hererocks/2.1.1713484068/lib/luarocks/rocks-5.1/?.lua;/home/edbert/.cache/nvim/packer_hererocks/2.1.1713484068/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/home/edbert/.cache/nvim/packer_hererocks/2.1.1713484068/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -110,6 +110,16 @@ _G.packer_plugins = {
     path = "/home/edbert/.local/share/nvim/site/pack/packer/start/cmp-path",
     url = "https://github.com/hrsh7th/cmp-path"
   },
+  ["cmp-vsnip"] = {
+    loaded = true,
+    path = "/home/edbert/.local/share/nvim/site/pack/packer/start/cmp-vsnip",
+    url = "https://github.com/hrsh7th/cmp-vsnip"
+  },
+  ["lspkind.nvim"] = {
+    loaded = true,
+    path = "/home/edbert/.local/share/nvim/site/pack/packer/start/lspkind.nvim",
+    url = "https://github.com/onsails/lspkind.nvim"
+  },
   ["monokai-pro.nvim"] = {
     config = { "\27LJ\2\n9\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\16monokai-pro\frequire\0" },
     loaded = true,
@@ -118,7 +128,7 @@ _G.packer_plugins = {
   },
   neoformat = {
     commands = { "Neoformat" },
-    config = { "\27LJ\2\nr\0\0\6\0\a\0\t6\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0005\5\6\0B\0\5\1K\0\1\0\1\0\2\fnoremap\2\vsilent\2\19:Neoformat<CR>\14<leader>f\6n\20nvim_set_keymap\bapi\bvim\0" },
+    config = { "\27LJ\2\nr\0\0\6\0\a\0\t6\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0005\5\6\0B\0\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2\19:Neoformat<CR>\14<leader>f\6n\20nvim_set_keymap\bapi\bvim\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
@@ -126,25 +136,23 @@ _G.packer_plugins = {
     url = "https://github.com/sbdchd/neoformat"
   },
   nerdtree = {
-    config = { "\27LJ\2\ns\0\0\6\0\a\0\t6\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0005\5\6\0B\0\5\1K\0\1\0\1\0\2\fnoremap\2\vsilent\2\24:NERDTreeToggle<CR>\n<C-n>\6n\20nvim_set_keymap\bapi\bvim\0" },
+    config = { "\27LJ\2\ns\0\0\6\0\a\0\t6\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0005\5\6\0B\0\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2\24:NERDTreeToggle<CR>\n<C-n>\6n\20nvim_set_keymap\bapi\bvim\0" },
     loaded = true,
     path = "/home/edbert/.local/share/nvim/site/pack/packer/start/nerdtree",
     url = "https://github.com/preservim/nerdtree"
   },
   ["nvim-cmp"] = {
-    config = { "\27LJ\2\nC\0\1\4\0\4\0\a6\1\0\0'\3\1\0B\1\2\0029\1\2\0019\3\3\0B\1\2\1K\0\1\0\tbody\15lsp_expand\fluasnip\frequireì\3\1\0\b\0\27\0/6\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\6\0005\4\4\0003\5\3\0=\5\5\4=\4\a\0035\4\n\0009\5\b\0009\5\t\5B\5\1\2=\5\v\0049\5\b\0009\5\f\5B\5\1\2=\5\r\0049\5\b\0009\5\14\5B\5\1\2=\5\15\0049\5\b\0009\5\16\0055\a\17\0B\5\2\2=\5\18\4=\4\b\0034\4\4\0005\5\19\0>\5\1\0045\5\20\0>\5\2\0045\5\21\0>\5\3\4=\4\22\3B\1\2\0019\1\2\0009\1\23\1'\3\24\0005\4\26\0004\5\3\0005\6\25\0>\6\1\5=\5\22\4B\1\3\1K\0\1\0\1\0\1\fsources\0\1\0\1\tname\fcmdline\6:\fcmdline\fsources\1\0\1\tname\tpath\1\0\1\tname\vbuffer\1\0\1\tname\rnvim_lsp\t<CR>\1\0\1\vselect\2\fconfirm\14<C-Space>\rcomplete\n<C-p>\21select_prev_item\n<C-n>\1\0\4\n<C-p>\0\14<C-Space>\0\n<C-n>\0\t<CR>\0\21select_next_item\fmapping\fsnippet\1\0\3\fsnippet\0\fsources\0\fmapping\0\vexpand\1\0\1\vexpand\0\0\nsetup\bcmp\frequire\0" },
     loaded = true,
     path = "/home/edbert/.local/share/nvim/site/pack/packer/start/nvim-cmp",
     url = "https://github.com/hrsh7th/nvim-cmp"
   },
   ["nvim-lspconfig"] = {
-    config = { "\27LJ\2\nC\0\0\4\0\4\0\b6\0\0\0'\2\1\0B\0\2\0029\1\2\0009\1\3\0014\3\0\0B\1\2\1K\0\1\0\nsetup\bzls\14lspconfig\frequire\0" },
     loaded = true,
     path = "/home/edbert/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
   },
   ["nvim-treesitter"] = {
-    config = { "\27LJ\2\n§\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\14highlight\1\0\1\venable\2\21ensure_installed\1\0\2\14highlight\0\21ensure_installed\0\1\2\0\0\bzig\nsetup\28nvim-treesitter.configs\frequire\0" },
+    config = { "\27LJ\2\n§\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\14highlight\1\0\1\venable\2\21ensure_installed\1\0\2\21ensure_installed\0\14highlight\0\1\2\0\0\bzig\nsetup\28nvim-treesitter.configs\frequire\0" },
     loaded = true,
     path = "/home/edbert/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
@@ -154,43 +162,60 @@ _G.packer_plugins = {
     path = "/home/edbert/.local/share/nvim/site/pack/packer/start/packer.nvim",
     url = "https://github.com/wbthomason/packer.nvim"
   },
+  ["plenary.nvim"] = {
+    loaded = true,
+    path = "/home/edbert/.local/share/nvim/site/pack/packer/start/plenary.nvim",
+    url = "https://github.com/nvim-lua/plenary.nvim"
+  },
+  ["symbols-outline.nvim"] = {
+    loaded = true,
+    path = "/home/edbert/.local/share/nvim/site/pack/packer/start/symbols-outline.nvim",
+    url = "https://github.com/simrat39/symbols-outline.nvim"
+  },
   ["tabby.nvim"] = {
-    config = { "\27LJ\2\n©\2\0\1\b\2\15\0/9\1\0\0B\1\1\2\15\0\1\0X\2\4€-\1\0\0009\1\1\1\14\0\1\0X\2\2€-\1\0\0009\1\2\0015\2\r\0-\3\1\0009\3\3\3'\5\4\0\18\6\1\0-\a\0\0009\a\5\aB\3\4\2>\3\1\0029\3\0\0B\3\1\2\15\0\3\0X\4\2€'\3\6\0X\4\1€'\3\a\0>\3\2\0029\3\b\0B\3\1\2>\3\3\0029\3\t\0B\3\1\2>\3\4\0029\3\n\0'\5\v\0B\3\2\2>\3\5\2-\3\1\0009\3\3\3'\5\f\0\18\6\1\0-\a\0\0009\a\5\aB\3\4\2>\3\6\2=\1\14\2L\2\2\0\0\0\0À\ahl\1\0\2\vmargin\6 \ahl\0\bî‚¼\bï€\14close_btn\tname\vnumber\tó°†£\bï†’\tfill\bî‚º\bsep\btab\16current_tab\15is_current×\1\0\1\a\2\v\0\"5\1\t\0-\2\0\0009\2\0\2'\4\1\0-\5\1\0009\5\2\5-\6\1\0009\6\3\6B\2\4\2>\2\1\0019\2\4\0B\2\1\2\15\0\2\0X\3\2€'\2\5\0X\3\1€'\2\6\0>\2\2\0019\2\a\0B\2\1\2>\2\3\1-\2\0\0009\2\0\2'\4\b\0-\5\1\0009\5\2\5-\6\1\0009\6\3\6B\2\4\2>\2\4\1-\2\1\0009\2\2\2=\2\n\1L\1\2\0\0À\0\0\ahl\1\0\2\vmargin\6 \ahl\0\bî‚¼\rbuf_name\bï„Œ\bï†’\15is_current\tfill\bwin\bî‚º\bsepÞ\2\1\1\b\1\18\00165\1\17\0004\2\3\0005\3\0\0-\4\0\0009\4\1\4=\4\2\3>\3\1\0029\3\3\0'\5\4\0-\6\0\0009\6\1\6-\a\0\0009\a\5\aB\3\4\0?\3\0\0>\2\1\0019\2\6\0B\2\1\0029\2\a\0023\4\b\0B\2\2\2>\2\2\0019\2\t\0B\2\1\2>\2\3\0019\2\n\0009\4\v\0009\4\f\4B\4\1\0A\2\0\0029\2\a\0023\4\r\0B\2\2\2>\2\4\0014\2\3\0009\3\3\0'\5\14\0-\6\0\0009\6\15\6-\a\0\0009\a\5\aB\3\4\2>\3\1\0025\3\16\0-\4\0\0009\4\15\4=\4\2\3>\3\2\2>\2\5\1-\2\0\0009\2\5\2=\2\2\0012\0\0€L\1\2\0\0À\1\0\1\ahl\0\1\2\1\0\n ïƒ¶ \ahl\0\ttail\bî‚º\0\20get_current_tab\bapi\16wins_in_tab\vspacer\0\fforeach\ttabs\tfill\bî‚¼\bsep\ahl\thead\1\2\1\0\n îŸ… \ahl\0\5€€À™\4³\1\1\0\5\0\a\0\v5\0\0\0006\1\1\0'\3\2\0B\1\2\0029\1\3\0015\3\5\0003\4\4\0=\4\6\3B\1\2\0012\0\0€K\0\1\0\tline\1\0\1\tline\0\0\nsetup\ntabby\frequire\1\0\6\btab\fTabLine\tfill\16TabLineFill\ttail\fTabLine\16current_tab\15TabLineSel\bwin\fTabLine\thead\fTabLine\0" },
+    config = { "\27LJ\2\n©\2\0\1\b\2\15\0/9\1\0\0B\1\1\2\15\0\1\0X\2\4€-\1\0\0009\1\1\1\14\0\1\0X\2\2€-\1\0\0009\1\2\0015\2\r\0-\3\1\0009\3\3\3'\5\4\0\18\6\1\0-\a\0\0009\a\5\aB\3\4\2>\3\1\0029\3\0\0B\3\1\2\15\0\3\0X\4\2€'\3\6\0X\4\1€'\3\a\0>\3\2\0029\3\b\0B\3\1\2>\3\3\0029\3\t\0B\3\1\2>\3\4\0029\3\n\0'\5\v\0B\3\2\2>\3\5\2-\3\1\0009\3\3\3'\5\f\0\18\6\1\0-\a\0\0009\a\5\aB\3\4\2>\3\6\2=\1\14\2L\2\2\0\0\0\0À\ahl\1\0\2\ahl\0\vmargin\6 \bî‚¼\bï€\14close_btn\tname\vnumber\tó°†£\bï†’\tfill\bî‚º\bsep\btab\16current_tab\15is_current×\1\0\1\a\2\v\0\"5\1\t\0-\2\0\0009\2\0\2'\4\1\0-\5\1\0009\5\2\5-\6\1\0009\6\3\6B\2\4\2>\2\1\0019\2\4\0B\2\1\2\15\0\2\0X\3\2€'\2\5\0X\3\1€'\2\6\0>\2\2\0019\2\a\0B\2\1\2>\2\3\1-\2\0\0009\2\0\2'\4\b\0-\5\1\0009\5\2\5-\6\1\0009\6\3\6B\2\4\2>\2\4\1-\2\1\0009\2\2\2=\2\n\1L\1\2\0\0À\0\0\ahl\1\0\2\ahl\0\vmargin\6 \bî‚¼\rbuf_name\bï„Œ\bï†’\15is_current\tfill\bwin\bî‚º\bsepÞ\2\1\1\b\1\18\00165\1\17\0004\2\3\0005\3\0\0-\4\0\0009\4\1\4=\4\2\3>\3\1\0029\3\3\0'\5\4\0-\6\0\0009\6\1\6-\a\0\0009\a\5\aB\3\4\0?\3\0\0>\2\1\0019\2\6\0B\2\1\0029\2\a\0023\4\b\0B\2\2\2>\2\2\0019\2\t\0B\2\1\2>\2\3\0019\2\n\0009\4\v\0009\4\f\4B\4\1\0A\2\0\0029\2\a\0023\4\r\0B\2\2\2>\2\4\0014\2\3\0009\3\3\0'\5\14\0-\6\0\0009\6\15\6-\a\0\0009\a\5\aB\3\4\2>\3\1\0025\3\16\0-\4\0\0009\4\15\4=\4\2\3>\3\2\2>\2\5\1-\2\0\0009\2\5\2=\2\2\0012\0\0€L\1\2\0\0À\1\0\1\ahl\0\1\2\1\0\n ïƒ¶ \ahl\0\ttail\bî‚º\0\20get_current_tab\bapi\16wins_in_tab\vspacer\0\fforeach\ttabs\tfill\bî‚¼\bsep\ahl\thead\1\2\1\0\n îŸ… \ahl\0\5€€À™\4³\1\1\0\5\0\a\0\v5\0\0\0006\1\1\0'\3\2\0B\1\2\0029\1\3\0015\3\5\0003\4\4\0=\4\6\3B\1\2\0012\0\0€K\0\1\0\tline\1\0\1\tline\0\0\nsetup\ntabby\frequire\1\0\6\tfill\16TabLineFill\ttail\fTabLine\btab\fTabLine\bwin\fTabLine\16current_tab\15TabLineSel\thead\fTabLine\0" },
     loaded = true,
     path = "/home/edbert/.local/share/nvim/site/pack/packer/start/tabby.nvim",
     url = "https://github.com/nanozuki/tabby.nvim"
+  },
+  ["telescope-fzf-native.nvim"] = {
+    loaded = true,
+    path = "/home/edbert/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim",
+    url = "https://github.com/nvim-telescope/telescope-fzf-native.nvim"
+  },
+  ["telescope.nvim"] = {
+    loaded = true,
+    path = "/home/edbert/.local/share/nvim/site/pack/packer/start/telescope.nvim",
+    url = "https://github.com/nvim-telescope/telescope.nvim"
+  },
+  ["vim-vsnip"] = {
+    loaded = true,
+    path = "/home/edbert/.local/share/nvim/site/pack/packer/start/vim-vsnip",
+    url = "https://github.com/hrsh7th/vim-vsnip"
   }
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: nerdtree
+time([[Config for nerdtree]], true)
+try_loadstring("\27LJ\2\ns\0\0\6\0\a\0\t6\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0005\5\6\0B\0\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2\24:NERDTreeToggle<CR>\n<C-n>\6n\20nvim_set_keymap\bapi\bvim\0", "config", "nerdtree")
+time([[Config for nerdtree]], false)
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+try_loadstring("\27LJ\2\n§\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\14highlight\1\0\1\venable\2\21ensure_installed\1\0\2\21ensure_installed\0\14highlight\0\1\2\0\0\bzig\nsetup\28nvim-treesitter.configs\frequire\0", "config", "nvim-treesitter")
+time([[Config for nvim-treesitter]], false)
+-- Config for: tabby.nvim
+time([[Config for tabby.nvim]], true)
+try_loadstring("\27LJ\2\n©\2\0\1\b\2\15\0/9\1\0\0B\1\1\2\15\0\1\0X\2\4€-\1\0\0009\1\1\1\14\0\1\0X\2\2€-\1\0\0009\1\2\0015\2\r\0-\3\1\0009\3\3\3'\5\4\0\18\6\1\0-\a\0\0009\a\5\aB\3\4\2>\3\1\0029\3\0\0B\3\1\2\15\0\3\0X\4\2€'\3\6\0X\4\1€'\3\a\0>\3\2\0029\3\b\0B\3\1\2>\3\3\0029\3\t\0B\3\1\2>\3\4\0029\3\n\0'\5\v\0B\3\2\2>\3\5\2-\3\1\0009\3\3\3'\5\f\0\18\6\1\0-\a\0\0009\a\5\aB\3\4\2>\3\6\2=\1\14\2L\2\2\0\0\0\0À\ahl\1\0\2\ahl\0\vmargin\6 \bî‚¼\bï€\14close_btn\tname\vnumber\tó°†£\bï†’\tfill\bî‚º\bsep\btab\16current_tab\15is_current×\1\0\1\a\2\v\0\"5\1\t\0-\2\0\0009\2\0\2'\4\1\0-\5\1\0009\5\2\5-\6\1\0009\6\3\6B\2\4\2>\2\1\0019\2\4\0B\2\1\2\15\0\2\0X\3\2€'\2\5\0X\3\1€'\2\6\0>\2\2\0019\2\a\0B\2\1\2>\2\3\1-\2\0\0009\2\0\2'\4\b\0-\5\1\0009\5\2\5-\6\1\0009\6\3\6B\2\4\2>\2\4\1-\2\1\0009\2\2\2=\2\n\1L\1\2\0\0À\0\0\ahl\1\0\2\ahl\0\vmargin\6 \bî‚¼\rbuf_name\bï„Œ\bï†’\15is_current\tfill\bwin\bî‚º\bsepÞ\2\1\1\b\1\18\00165\1\17\0004\2\3\0005\3\0\0-\4\0\0009\4\1\4=\4\2\3>\3\1\0029\3\3\0'\5\4\0-\6\0\0009\6\1\6-\a\0\0009\a\5\aB\3\4\0?\3\0\0>\2\1\0019\2\6\0B\2\1\0029\2\a\0023\4\b\0B\2\2\2>\2\2\0019\2\t\0B\2\1\2>\2\3\0019\2\n\0009\4\v\0009\4\f\4B\4\1\0A\2\0\0029\2\a\0023\4\r\0B\2\2\2>\2\4\0014\2\3\0009\3\3\0'\5\14\0-\6\0\0009\6\15\6-\a\0\0009\a\5\aB\3\4\2>\3\1\0025\3\16\0-\4\0\0009\4\15\4=\4\2\3>\3\2\2>\2\5\1-\2\0\0009\2\5\2=\2\2\0012\0\0€L\1\2\0\0À\1\0\1\ahl\0\1\2\1\0\n ïƒ¶ \ahl\0\ttail\bî‚º\0\20get_current_tab\bapi\16wins_in_tab\vspacer\0\fforeach\ttabs\tfill\bî‚¼\bsep\ahl\thead\1\2\1\0\n îŸ… \ahl\0\5€€À™\4³\1\1\0\5\0\a\0\v5\0\0\0006\1\1\0'\3\2\0B\1\2\0029\1\3\0015\3\5\0003\4\4\0=\4\6\3B\1\2\0012\0\0€K\0\1\0\tline\1\0\1\tline\0\0\nsetup\ntabby\frequire\1\0\6\tfill\16TabLineFill\ttail\fTabLine\btab\fTabLine\bwin\fTabLine\16current_tab\15TabLineSel\thead\fTabLine\0", "config", "tabby.nvim")
+time([[Config for tabby.nvim]], false)
 -- Config for: auto-save.nvim
 time([[Config for auto-save.nvim]], true)
 try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14auto-save\frequire\0", "config", "auto-save.nvim")
 time([[Config for auto-save.nvim]], false)
--- Config for: nerdtree
-time([[Config for nerdtree]], true)
-try_loadstring("\27LJ\2\ns\0\0\6\0\a\0\t6\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0005\5\6\0B\0\5\1K\0\1\0\1\0\2\fnoremap\2\vsilent\2\24:NERDTreeToggle<CR>\n<C-n>\6n\20nvim_set_keymap\bapi\bvim\0", "config", "nerdtree")
-time([[Config for nerdtree]], false)
 -- Config for: monokai-pro.nvim
 time([[Config for monokai-pro.nvim]], true)
 try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\16monokai-pro\frequire\0", "config", "monokai-pro.nvim")
 time([[Config for monokai-pro.nvim]], false)
--- Config for: tabby.nvim
-time([[Config for tabby.nvim]], true)
-try_loadstring("\27LJ\2\n©\2\0\1\b\2\15\0/9\1\0\0B\1\1\2\15\0\1\0X\2\4€-\1\0\0009\1\1\1\14\0\1\0X\2\2€-\1\0\0009\1\2\0015\2\r\0-\3\1\0009\3\3\3'\5\4\0\18\6\1\0-\a\0\0009\a\5\aB\3\4\2>\3\1\0029\3\0\0B\3\1\2\15\0\3\0X\4\2€'\3\6\0X\4\1€'\3\a\0>\3\2\0029\3\b\0B\3\1\2>\3\3\0029\3\t\0B\3\1\2>\3\4\0029\3\n\0'\5\v\0B\3\2\2>\3\5\2-\3\1\0009\3\3\3'\5\f\0\18\6\1\0-\a\0\0009\a\5\aB\3\4\2>\3\6\2=\1\14\2L\2\2\0\0\0\0À\ahl\1\0\2\vmargin\6 \ahl\0\bî‚¼\bï€\14close_btn\tname\vnumber\tó°†£\bï†’\tfill\bî‚º\bsep\btab\16current_tab\15is_current×\1\0\1\a\2\v\0\"5\1\t\0-\2\0\0009\2\0\2'\4\1\0-\5\1\0009\5\2\5-\6\1\0009\6\3\6B\2\4\2>\2\1\0019\2\4\0B\2\1\2\15\0\2\0X\3\2€'\2\5\0X\3\1€'\2\6\0>\2\2\0019\2\a\0B\2\1\2>\2\3\1-\2\0\0009\2\0\2'\4\b\0-\5\1\0009\5\2\5-\6\1\0009\6\3\6B\2\4\2>\2\4\1-\2\1\0009\2\2\2=\2\n\1L\1\2\0\0À\0\0\ahl\1\0\2\vmargin\6 \ahl\0\bî‚¼\rbuf_name\bï„Œ\bï†’\15is_current\tfill\bwin\bî‚º\bsepÞ\2\1\1\b\1\18\00165\1\17\0004\2\3\0005\3\0\0-\4\0\0009\4\1\4=\4\2\3>\3\1\0029\3\3\0'\5\4\0-\6\0\0009\6\1\6-\a\0\0009\a\5\aB\3\4\0?\3\0\0>\2\1\0019\2\6\0B\2\1\0029\2\a\0023\4\b\0B\2\2\2>\2\2\0019\2\t\0B\2\1\2>\2\3\0019\2\n\0009\4\v\0009\4\f\4B\4\1\0A\2\0\0029\2\a\0023\4\r\0B\2\2\2>\2\4\0014\2\3\0009\3\3\0'\5\14\0-\6\0\0009\6\15\6-\a\0\0009\a\5\aB\3\4\2>\3\1\0025\3\16\0-\4\0\0009\4\15\4=\4\2\3>\3\2\2>\2\5\1-\2\0\0009\2\5\2=\2\2\0012\0\0€L\1\2\0\0À\1\0\1\ahl\0\1\2\1\0\n ïƒ¶ \ahl\0\ttail\bî‚º\0\20get_current_tab\bapi\16wins_in_tab\vspacer\0\fforeach\ttabs\tfill\bî‚¼\bsep\ahl\thead\1\2\1\0\n îŸ… \ahl\0\5€€À™\4³\1\1\0\5\0\a\0\v5\0\0\0006\1\1\0'\3\2\0B\1\2\0029\1\3\0015\3\5\0003\4\4\0=\4\6\3B\1\2\0012\0\0€K\0\1\0\tline\1\0\1\tline\0\0\nsetup\ntabby\frequire\1\0\6\btab\fTabLine\tfill\16TabLineFill\ttail\fTabLine\16current_tab\15TabLineSel\bwin\fTabLine\thead\fTabLine\0", "config", "tabby.nvim")
-time([[Config for tabby.nvim]], false)
--- Config for: nvim-treesitter
-time([[Config for nvim-treesitter]], true)
-try_loadstring("\27LJ\2\n§\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\14highlight\1\0\1\venable\2\21ensure_installed\1\0\2\14highlight\0\21ensure_installed\0\1\2\0\0\bzig\nsetup\28nvim-treesitter.configs\frequire\0", "config", "nvim-treesitter")
-time([[Config for nvim-treesitter]], false)
--- Config for: nvim-cmp
-time([[Config for nvim-cmp]], true)
-try_loadstring("\27LJ\2\nC\0\1\4\0\4\0\a6\1\0\0'\3\1\0B\1\2\0029\1\2\0019\3\3\0B\1\2\1K\0\1\0\tbody\15lsp_expand\fluasnip\frequireì\3\1\0\b\0\27\0/6\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\6\0005\4\4\0003\5\3\0=\5\5\4=\4\a\0035\4\n\0009\5\b\0009\5\t\5B\5\1\2=\5\v\0049\5\b\0009\5\f\5B\5\1\2=\5\r\0049\5\b\0009\5\14\5B\5\1\2=\5\15\0049\5\b\0009\5\16\0055\a\17\0B\5\2\2=\5\18\4=\4\b\0034\4\4\0005\5\19\0>\5\1\0045\5\20\0>\5\2\0045\5\21\0>\5\3\4=\4\22\3B\1\2\0019\1\2\0009\1\23\1'\3\24\0005\4\26\0004\5\3\0005\6\25\0>\6\1\5=\5\22\4B\1\3\1K\0\1\0\1\0\1\fsources\0\1\0\1\tname\fcmdline\6:\fcmdline\fsources\1\0\1\tname\tpath\1\0\1\tname\vbuffer\1\0\1\tname\rnvim_lsp\t<CR>\1\0\1\vselect\2\fconfirm\14<C-Space>\rcomplete\n<C-p>\21select_prev_item\n<C-n>\1\0\4\n<C-p>\0\14<C-Space>\0\n<C-n>\0\t<CR>\0\21select_next_item\fmapping\fsnippet\1\0\3\fsnippet\0\fsources\0\fmapping\0\vexpand\1\0\1\vexpand\0\0\nsetup\bcmp\frequire\0", "config", "nvim-cmp")
-time([[Config for nvim-cmp]], false)
--- Config for: nvim-lspconfig
-time([[Config for nvim-lspconfig]], true)
-try_loadstring("\27LJ\2\nC\0\0\4\0\4\0\b6\0\0\0'\2\1\0B\0\2\0029\1\2\0009\1\3\0014\3\0\0B\1\2\1K\0\1\0\nsetup\bzls\14lspconfig\frequire\0", "config", "nvim-lspconfig")
-time([[Config for nvim-lspconfig]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
