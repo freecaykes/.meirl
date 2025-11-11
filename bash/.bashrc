@@ -125,7 +125,7 @@ alias xrandrreset="xrandr -s 0"
 #git
 alias current_branch="git rev-parse --abbrev-ref HEAD"
 alias git-clean="git clean -ffxd"
-alias syncfork="/home/edbert/workspace/scripts/syncfork.sh"
+alias syncfork="/home/${USER}/workspace/scripts/syncfork.sh"
 
 #go
 alias go-clean="go clean --modcache"
@@ -135,12 +135,12 @@ alias vi="nvim"
 
 #docker
 alias docker-local="docker-machine env -u"
-alias docker-push="/home/edbert/workspace/scripts/docker-push.sh"
+alias docker-push="/home/${USER}/workspace/scripts/docker-push.sh"
 alias docker-set-self="sudo usermod -a -G docker $USER"
 alias docker-system-prune="docker system prune -a"
 
 #kubernetes
 alias k-port-forward="f(){kubectl -n "$1" port-forward svc/"$2" 9443; unset -f f;} f"
 
-[[ -s "/home/edbert/.gvm/scripts/gvm" ]] && source "/home/edbert/.gvm/scripts/gvm"
+[[ -s "/home/${USER}/.gvm/scripts/gvm" ]] && source "/home/${USER}/.gvm/scripts/gvm"
 export PATH="/opt/zig/zig-linux-x86_64-0.14.0-dev.1904+e2e79960d:$PATH"
