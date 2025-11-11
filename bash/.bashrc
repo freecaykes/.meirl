@@ -120,7 +120,6 @@ alias wifi-connect="nmcli device wifi connect"
 alias xrandrhdmi="/home/${USER}/workspace/scripts/xrandrHDMI.sh"
 alias xrandrvga="/home/${USER}/workspace/scripts/xrandrVGA.sh"
 alias xrandrreset="xrandr -s 0"
-. "$HOME/.cargo/env"
 
 #git
 alias current_branch="git rev-parse --abbrev-ref HEAD"
